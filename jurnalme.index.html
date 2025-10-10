@@ -1,0 +1,1165 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Harian - 7 Kebiasaan Anak Indonesia Hebat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .habit-card {
+            transition: all 0.3s ease;
+        }
+        
+        .habit-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .checked {
+            background: linear-gradient(135deg, #a7f3d0, #6ee7b7);
+            border-color: #10b981;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .bounce-animation {
+            animation: bounce 1s ease-in-out;
+        }
+        
+        .sun-icon {
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .star-twinkle {
+            animation: twinkle 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            from { opacity: 0.5; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.1); }
+        }
+        
+        @keyframes motivationPop {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -20px) scale(0.5); 
+            }
+            20% { 
+                opacity: 1; 
+                transform: translate(-50%, -30px) scale(1.2); 
+            }
+            40% { 
+                transform: translate(-50%, -35px) scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50px) scale(0.8); 
+            }
+        }
+        
+        .islamic-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(251, 146, 60, 0.1) 0%, transparent 50%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="min-h-full bg-gradient-to-br from-blue-50 via-white to-orange-50 font-sans islamic-pattern">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Welcome Motivation Section -->
+        <div class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 rounded-3xl shadow-xl p-6 mb-6 border-2 border-blue-200">
+            <div class="text-center">
+                <!-- Mood Emoticons -->
+                <div class="flex justify-center space-x-3 mb-4">
+                    <button onclick="setMood('excited')" class="mood-btn text-4xl hover:scale-110 transition-transform duration-300" id="mood-excited" title="Semangat banget!">
+                        🤩
+                    </button>
+                    <button onclick="setMood('happy')" class="mood-btn text-4xl hover:scale-110 transition-transform duration-300" id="mood-happy" title="Bahagia hari ini!">
+                        😊
+                    </button>
+                    <button onclick="setMood('motivated')" class="mood-btn text-4xl hover:scale-110 transition-transform duration-300" id="mood-motivated" title="Siap berjuang!">
+                        💪
+                    </button>
+                    <button onclick="setMood('calm')" class="mood-btn text-4xl hover:scale-110 transition-transform duration-300" id="mood-calm" title="Tenang dan fokus">
+                        😌
+                    </button>
+                    <button onclick="setMood('sleepy')" class="mood-btn text-4xl hover:scale-110 transition-transform duration-300" id="mood-sleepy" title="Masih ngantuk nih">
+                        😴
+                    </button>
+                </div>
+                
+                <!-- Selected Mood Display -->
+                <div class="mb-4">
+                    <div class="text-5xl mb-2" id="selectedMoodEmoji">😊</div>
+                    <div class="text-sm text-gray-600 font-semibold" id="selectedMoodText">Bagaimana perasaanmu hari ini?</div>
+                </div>
+                
+                <!-- Daily Motivational Quote -->
+                <div class="bg-white rounded-2xl p-4 shadow-md border border-blue-200">
+                    <div class="text-lg font-bold text-blue-800 mb-2" id="motivationalQuote">
+                        "Setiap hari adalah kesempatan baru untuk menjadi versi terbaik dari dirimu!"
+                    </div>
+                    <div class="text-sm text-gray-600 italic" id="quoteAuthor">
+                        - Motivasi Anak Hebat Indonesia -
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold gradient-text mb-2">
+                📚 Jurnal 7 Kebiasaan Hebat
+            </h1>
+            <div class="flex items-center justify-center space-x-2 text-sm text-gray-600">
+                <span id="currentDate"><!-- Will be filled by JavaScript --></span>
+                <span>•</span>
+                <span class="text-blue-600 font-semibold" id="dayTitle">Hari ke-1 - Senin</span>
+            </div>
+        </div>
+
+        <!-- Daily Theme Card (Hidden by default, shown when day is clicked) -->
+        <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl shadow-lg p-4 mb-6 border-2 border-opacity-30 border-gray-300 hidden" id="themeCard">
+            <div class="text-center">
+                <div class="text-3xl mb-2" id="themeEmoji">🌅</div>
+                <h3 class="text-lg font-bold text-gray-800 mb-1" id="themeTitle">
+                    Hari Semangat Baru
+                </h3>
+                <p class="text-sm text-gray-700 italic" id="themeMotivation">
+                    Setiap hari adalah kesempatan baru untuk menjadi lebih baik!
+                </p>
+            </div>
+        </div>
+
+        <!-- Habits Checklist -->
+        <div class="bg-white rounded-2xl shadow-lg p-4 mb-6 border border-blue-200">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold gradient-text">
+                    ✨ 7 Kebiasaan Hebat
+                </h3>
+                <div class="text-sm font-semibold text-orange-600" id="progressText">0/7</div>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-2" id="habitsContainer">
+                <!-- Habit items will be generated by JavaScript -->
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="mt-4">
+                <div class="bg-blue-200 rounded-full h-2 overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-orange-500 h-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                </div>
+                <div class="text-center mt-2 text-xs text-gray-600" id="motivationText">
+                    Ayo mulai kebiasaan hebat pertamamu!
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Section -->
+        <div class="bg-gradient-to-r from-orange-100 to-blue-100 rounded-2xl shadow-lg p-4 mb-6 border border-orange-200">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-bold gradient-text">
+                    📝 Refleksi Harian
+                </h3>
+                <div class="text-xs text-orange-600 font-semibold" id="reflectionCompleted">Belum</div>
+            </div>
+            
+            <textarea 
+                id="reflectionText"
+                placeholder="Ceritakan kebiasaan hebat yang sudah kamu lakukan hari ini..."
+                class="w-full h-24 p-3 border border-orange-200 rounded-xl resize-none focus:outline-none focus:border-orange-400 text-sm text-gray-700 bg-white"
+                oninput="updateReflectionProgress()"
+            ></textarea>
+            
+            <div class="mt-2 flex justify-between items-center">
+                <div class="text-xs text-gray-500" id="charCount">0 karakter</div>
+                <button 
+                    onclick="clearReflection()"
+                    class="px-2 py-1 bg-red-100 text-red-600 rounded-lg text-xs hover:bg-red-200 transition-colors duration-200"
+                >
+                    🗑️ Hapus
+                </button>
+            </div>
+        </div>
+
+        <!-- Submit Section -->
+        <div class="text-center mb-6">
+            <button 
+                onclick="finishDay()"
+                class="px-6 py-3 bg-gradient-to-r from-blue-500 to-orange-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-orange-600 transition-all duration-300 shadow-lg transform hover:scale-105"
+                id="finishButton"
+            >
+                🎯 Selesai Hari Ini
+            </button>
+            
+            <!-- Completion Message -->
+            <div class="mt-4 p-4 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl hidden border border-green-300" id="completionMessage">
+                <div class="text-2xl mb-1">🎉</div>
+                <div class="text-green-800 font-bold mb-1">
+                    Selamat! Hari ini selesai dengan sempurna!
+                </div>
+                <div class="text-sm text-green-700">
+                    Kamu anak Indonesia yang hebat! 
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Progress Tracker -->
+        <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl shadow-xl p-6 mb-8 border-2 border-purple-200">
+            <h3 class="text-2xl font-bold text-center mb-6">
+                <span class="gradient-text">📊 Progress Mingguan</span>
+            </h3>
+            
+            <!-- Weekly Stats -->
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="bg-white rounded-2xl p-4 text-center shadow-md">
+                    <div class="text-2xl font-bold text-green-600" id="completedDaysCount">0</div>
+                    <div class="text-sm text-gray-600">Hari Selesai</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 text-center shadow-md">
+                    <div class="text-2xl font-bold text-blue-600" id="totalHabitsCount">0</div>
+                    <div class="text-sm text-gray-600">Total Kebiasaan</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 text-center shadow-md">
+                    <div class="text-2xl font-bold text-purple-600" id="weeklyPercentage">0%</div>
+                    <div class="text-sm text-gray-600">Pencapaian</div>
+                </div>
+            </div>
+            
+            <!-- Daily Progress Grid -->
+            <div class="grid grid-cols-7 gap-2 mb-6" id="weeklyProgressGrid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+            
+            <!-- Weekly Progress Bar -->
+            <div class="bg-white rounded-2xl p-4 shadow-md">
+                <div class="flex justify-between text-sm text-purple-700 mb-2">
+                    <span>Progress Mingguan</span>
+                    <span id="weeklyProgressText">0/7 hari selesai</span>
+                </div>
+                <div class="bg-purple-200 rounded-full h-4 overflow-hidden">
+                    <div id="weeklyProgressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <!-- Day Selector -->
+            <div class="mt-4">
+                <h4 class="text-md font-bold text-purple-800 mb-3 text-center">Pilih Hari</h4>
+                <div class="grid grid-cols-7 gap-1">
+                    <button onclick="switchToDay(1)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-1" title="🌅 Hari Semangat Baru - Setiap hari adalah kesempatan baru untuk menjadi lebih baik!">
+                        <div class="text-lg mb-1">🌅</div>
+                        <div class="text-xs">Sen</div>
+                        <div class="text-sm mt-1" id="day-check-1">⭕</div>
+                    </button>
+                    <button onclick="switchToDay(2)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-2" title="💪 Hari Kekuatan - Kamu lebih kuat dari yang kamu kira. Tunjukkan kekuatanmu!">
+                        <div class="text-lg mb-1">💪</div>
+                        <div class="text-xs">Sel</div>
+                        <div class="text-sm mt-1" id="day-check-2">⭕</div>
+                    </button>
+                    <button onclick="switchToDay(3)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-3" title="🌟 Hari Bersinar - Biarkan cahayamu bersinar dan menginspirasi orang lain!">
+                        <div class="text-lg mb-1">🌟</div>
+                        <div class="text-xs">Rab</div>
+                        <div class="text-sm mt-1" id="day-check-3">⭕</div>
+                    </button>
+                    <button onclick="switchToDay(4)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-4" title="🚀 Hari Petualangan - Jelajahi hal-hal baru dan raih mimpi setinggi langit!">
+                        <div class="text-lg mb-1">🚀</div>
+                        <div class="text-xs">Kam</div>
+                        <div class="text-sm mt-1" id="day-check-4">⭕</div>
+                    </button>
+                    <button onclick="switchToDay(5)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-5" title="🎯 Hari Fokus - Fokus pada tujuanmu dan tidak ada yang tidak mungkin!">
+                        <div class="text-lg mb-1">🎯</div>
+                        <div class="text-xs">Jum</div>
+                        <div class="text-sm mt-1" id="day-check-5">⭕</div>
+                    </button>
+                    <button onclick="switchToDay(6)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-6" title="🌈 Hari Kebahagiaan - Sebarkan kebahagiaan seperti pelangi setelah hujan!">
+                        <div class="text-lg mb-1">🌈</div>
+                        <div class="text-xs">Sab</div>
+                        <div class="text-sm mt-1" id="day-check-6">⭕</div>
+                    </button>
+                    <button onclick="switchToDay(7)" class="day-selector-btn bg-white border border-purple-200 rounded-lg p-2 text-xs font-semibold transition-all duration-300 hover:border-purple-400 hover:bg-purple-50" id="day-selector-7" title="🏆 Hari Juara - Kamu adalah juara dalam hidupmu sendiri. Rayakan pencapaianmu!">
+                        <div class="text-lg mb-1">🏆</div>
+                        <div class="text-xs">Min</div>
+                        <div class="text-sm mt-1" id="day-check-7">⭕</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Inspirational Quote -->
+        <div class="mt-8 text-center">
+            <div class="bg-gradient-to-r from-blue-100 to-orange-100 rounded-2xl p-6 border-2 border-blue-200">
+                <div class="text-lg text-gray-700 mb-2 font-semibold">
+                    "Kebiasaan baik adalah fondasi kesuksesan"
+                </div>
+                <div class="text-sm text-gray-600">
+                    Mulai dari hal kecil, lakukan secara konsisten, dan rasakan perubahannya
+                </div>
+                <div class="text-xs text-gray-500 mt-2">
+                    - Motivasi Anak Hebat -
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const habits = [
+            { id: 1, text: "Bangun pagi dan berdoa", icon: "🌅", description: "Memulai hari dengan semangat dan syukur" },
+            { id: 2, text: "Sarapan sehat dan bergizi", icon: "🥗", description: "Makan makanan bergizi untuk energi" },
+            { id: 3, text: "Belajar dengan fokus", icon: "📚", description: "Menuntut ilmu dengan tekun dan rajin" },
+            { id: 4, text: "Membantu orang tua", icon: "❤️", description: "Berbakti dan menghormati orang tua" },
+            { id: 5, text: "Olahraga atau bergerak aktif", icon: "🏃‍♂️", description: "Menjaga kesehatan tubuh dengan bergerak" },
+            { id: 6, text: "Membaca buku atau artikel", icon: "📖", description: "Menambah wawasan dengan membaca" },
+            { id: 7, text: "Bersyukur dan berbagi kebaikan", icon: "🙏", description: "Berbagi kebaikan dengan sesama" }
+        ];
+
+        const motivationMessages = [
+            "Ayo mulai kebiasaan hebat pertamamu!",
+            "Bagus! Kamu sudah memulai!",
+            "Keren! Terus semangat!",
+            "Wow! Kamu hebat!",
+            "Luar biasa! Hampir setengah jalan!",
+            "Amazing! Kamu hampir sampai!",
+            "Fantastis! Satu lagi!",
+            "🎉 SEMPURNA! Kamu anak hebat! 🎉"
+        ];
+
+        let currentDay = 1;
+        let checkedCount = 0;
+        let habitStates = {};
+        let dailyData = {};
+        let currentMood = 'happy';
+
+        // Motivational quotes collection
+        const motivationalQuotes = [
+            {
+                quote: "Setiap hari adalah kesempatan baru untuk menjadi versi terbaik dari dirimu!",
+                author: "Motivasi Anak Hebat Indonesia"
+            },
+            {
+                quote: "Kebiasaan kecil yang konsisten akan membawa perubahan besar dalam hidupmu!",
+                author: "Inspirasi Harian"
+            },
+            {
+                quote: "Kamu adalah penulis cerita hidupmu sendiri. Tulislah dengan kebiasaan yang hebat!",
+                author: "Semangat Pagi"
+            },
+            {
+                quote: "Tidak ada yang tidak mungkin jika kamu konsisten dan tidak pernah menyerah!",
+                author: "Motivasi Anak Indonesia"
+            },
+            {
+                quote: "Setiap kebiasaan baik adalah investasi untuk masa depanmu yang gemilang!",
+                author: "Kata Bijak Harian"
+            },
+            {
+                quote: "Mulai dari hal kecil, lakukan dengan hati, dan rasakan keajaibannya!",
+                author: "Inspirasi Pagi"
+            },
+            {
+                quote: "Kamu lebih kuat dari yang kamu kira, lebih berani dari yang kamu rasakan!",
+                author: "Semangat Anak Hebat"
+            }
+        ];
+
+        // Mood responses
+        const moodResponses = {
+            excited: {
+                emoji: "🤩",
+                text: "Wah, semangat banget hari ini! Pasti bisa selesaikan semua kebiasaan hebat!",
+                color: "text-orange-600"
+            },
+            happy: {
+                emoji: "😊", 
+                text: "Senang sekali melihatmu bahagia! Ayo mulai hari dengan kebiasaan positif!",
+                color: "text-green-600"
+            },
+            motivated: {
+                emoji: "💪",
+                text: "Siap berjuang! Dengan semangat seperti ini, tidak ada yang tidak mungkin!",
+                color: "text-blue-600"
+            },
+            calm: {
+                emoji: "😌",
+                text: "Tenang dan fokus adalah kunci kesuksesan. Ayo mulai dengan santai tapi pasti!",
+                color: "text-purple-600"
+            },
+            sleepy: {
+                emoji: "😴",
+                text: "Masih ngantuk? Tidak apa-apa, mulai pelan-pelan saja. Kamu pasti bisa!",
+                color: "text-gray-600"
+            }
+        };
+
+        // Set mood function
+        function setMood(mood) {
+            currentMood = mood;
+            const response = moodResponses[mood];
+            
+            // Update selected mood display
+            document.getElementById('selectedMoodEmoji').textContent = response.emoji;
+            document.getElementById('selectedMoodText').textContent = response.text;
+            document.getElementById('selectedMoodText').className = `text-sm font-semibold ${response.color}`;
+            
+            // Reset all mood buttons
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.classList.remove('bg-yellow-200', 'rounded-full', 'shadow-lg');
+            });
+            
+            // Highlight selected mood
+            const selectedBtn = document.getElementById(`mood-${mood}`);
+            selectedBtn.classList.add('bg-yellow-200', 'rounded-full', 'shadow-lg');
+            
+            // Add bounce animation
+            selectedBtn.classList.add('bounce-animation');
+            setTimeout(() => {
+                selectedBtn.classList.remove('bounce-animation');
+            }, 1000);
+            
+            // Show motivational message
+            showMoodMotivation(response.text);
+        }
+
+        // Show mood motivation popup
+        function showMoodMotivation(message) {
+            const popup = document.createElement('div');
+            popup.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl z-50';
+            popup.textContent = "✨ " + message;
+            popup.style.animation = 'motivationPop 3s ease-out forwards';
+            
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                if (popup.parentNode) {
+                    popup.parentNode.removeChild(popup);
+                }
+            }, 3000);
+        }
+
+        // Get random motivational quote
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
+            return motivationalQuotes[randomIndex];
+        }
+
+        // Update daily quote
+        function updateDailyQuote() {
+            const quote = getRandomQuote();
+            document.getElementById('motivationalQuote').textContent = `"${quote.quote}"`;
+            document.getElementById('quoteAuthor').textContent = `- ${quote.author} -`;
+        }
+
+        // Initialize daily data for all 7 days
+        function initializeDailyData() {
+            for (let day = 1; day <= 7; day++) {
+                dailyData[day] = {
+                    habits: {},
+                    reflection: '',
+                    isCompleted: false,
+                    mood: 'happy'
+                };
+                habits.forEach(habit => {
+                    dailyData[day].habits[habit.id] = {
+                        checked: false,
+                        note: '',
+                        targetTime: getDefaultTime(habit.id)
+                    };
+                });
+            }
+        }
+
+        // Initialize habit states
+        function initializeHabits() {
+            habits.forEach(habit => {
+                habitStates[habit.id] = {
+                    checked: false,
+                    note: '',
+                    targetTime: getDefaultTime(habit.id)
+                };
+            });
+        }
+
+        // Get default time for each habit
+        function getDefaultTime(habitId) {
+            const defaultTimes = {
+                1: "06:00", // Bangun pagi dan berdoa
+                2: "07:00", // Sarapan sehat
+                3: "19:00", // Belajar dengan fokus
+                4: "16:00", // Membantu orang tua
+                5: "17:00", // Olahraga
+                6: "20:00", // Membaca buku
+                7: "21:00"  // Bersyukur dan berbagi
+            };
+            return defaultTimes[habitId] || "07:00";
+        }
+
+        // Update analog clock display
+        function updateClock(habitId) {
+            const timeInput = document.getElementById(`time-input-${habitId}`);
+            const timeDisplay = document.getElementById(`time-display-${habitId}`);
+            const hourHand = document.getElementById(`hour-hand-${habitId}`);
+            const minuteHand = document.getElementById(`minute-hand-${habitId}`);
+            
+            const time = timeInput.value;
+            const [hours, minutes] = time.split(':').map(Number);
+            
+            // Update display
+            timeDisplay.textContent = time;
+            
+            // Calculate angles for clock hands
+            const hourAngle = (hours % 12) * 30 + (minutes * 0.5); // 30 degrees per hour + minute adjustment
+            const minuteAngle = minutes * 6; // 6 degrees per minute
+            
+            // Update hour hand
+            const hourX = 50 + 20 * Math.cos((hourAngle - 90) * Math.PI / 180);
+            const hourY = 50 + 20 * Math.sin((hourAngle - 90) * Math.PI / 180);
+            hourHand.setAttribute('x2', hourX);
+            hourHand.setAttribute('y2', hourY);
+            
+            // Update minute hand
+            const minuteX = 50 + 30 * Math.cos((minuteAngle - 90) * Math.PI / 180);
+            const minuteY = 50 + 30 * Math.sin((minuteAngle - 90) * Math.PI / 180);
+            minuteHand.setAttribute('x2', minuteX);
+            minuteHand.setAttribute('y2', minuteY);
+            
+            // Save time to habit state
+            if (habitStates[habitId]) {
+                habitStates[habitId].targetTime = time;
+            }
+        }
+
+        // Set current time
+        function setCurrentTime(habitId) {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const currentTime = `${hours}:${minutes}`;
+            
+            const timeInput = document.getElementById(`time-input-${habitId}`);
+            timeInput.value = currentTime;
+            updateClock(habitId);
+        }
+
+        // Initialize all clocks
+        function initializeClocks() {
+            habits.forEach(habit => {
+                const timeInput = document.getElementById(`time-input-${habit.id}`);
+                if (timeInput) {
+                    timeInput.value = habitStates[habit.id].targetTime;
+                    updateClock(habit.id);
+                }
+            });
+        }
+
+        // Set current date
+        function setCurrentDate() {
+            const now = new Date();
+            const options = { 
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric' 
+            };
+            
+            const indonesianDate = now.toLocaleDateString('id-ID', options);
+            document.getElementById('currentDate').textContent = indonesianDate;
+        }
+
+        // Update day title based on current day
+        function updateDayTitle() {
+            const dayNames = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+            const dayName = dayNames[(currentDay - 1) % 7];
+            document.getElementById('dayTitle').textContent = `Hari ke-${currentDay} - ${dayName}`;
+        }
+
+        // Update daily theme
+        function updateDayTheme() {
+            const theme = dailyThemes[currentDay];
+            const themeCard = document.getElementById('themeCard');
+            
+            // Show theme card
+            themeCard.classList.remove('hidden');
+            
+            // Update theme emoji
+            document.getElementById('themeEmoji').textContent = theme.emoji;
+            
+            // Update theme title
+            document.getElementById('themeTitle').textContent = theme.title;
+            
+            // Update motivation message
+            document.getElementById('themeMotivation').textContent = theme.motivation;
+            
+            // Update theme card colors
+            themeCard.className = `bg-gradient-to-r ${theme.bgColor} rounded-2xl shadow-lg p-4 mb-6 border-2 border-opacity-30 border-gray-300`;
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                themeCard.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Create habit card
+        function createHabitCard(habit) {
+            return `
+                <div class="habit-card bg-white rounded-lg p-3 border border-blue-200 hover:border-orange-300 transition-all duration-300" id="habit-${habit.id}">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <div class="text-xl">${habit.icon}</div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold text-blue-800">${habit.text}</p>
+                            </div>
+                        </div>
+                        
+                        <button 
+                            onclick="toggleHabit(${habit.id})"
+                            class="w-8 h-8 border-2 border-blue-300 rounded-lg flex items-center justify-center transition-all duration-300 hover:border-orange-400 bg-white"
+                            id="checkbox-${habit.id}"
+                        >
+                            <span class="text-green-600 text-lg hidden" id="check-${habit.id}">✅</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Analog Clock and Time Setting -->
+                    <div class="flex items-center justify-between bg-gray-50 rounded-lg p-2">
+                        <!-- Analog Clock -->
+                        <div class="flex items-center space-x-2">
+                            <div class="relative">
+                                <svg width="40" height="40" viewBox="0 0 100 100" class="transform -rotate-90" id="clock-${habit.id}">
+                                    <!-- Clock face -->
+                                    <circle cx="50" cy="50" r="45" fill="white" stroke="#3b82f6" stroke-width="2"/>
+                                    
+                                    <!-- Hour markers -->
+                                    <g stroke="#6b7280" stroke-width="1">
+                                        <line x1="50" y1="10" x2="50" y2="15" />
+                                        <line x1="85" y1="50" x2="90" y2="50" />
+                                        <line x1="50" y1="85" x2="50" y2="90" />
+                                        <line x1="10" y1="50" x2="15" y2="50" />
+                                    </g>
+                                    
+                                    <!-- Hour hand -->
+                                    <line x1="50" y1="50" x2="50" y2="30" stroke="#1f2937" stroke-width="3" stroke-linecap="round" id="hour-hand-${habit.id}"/>
+                                    
+                                    <!-- Minute hand -->
+                                    <line x1="50" y1="50" x2="50" y2="20" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" id="minute-hand-${habit.id}"/>
+                                    
+                                    <!-- Center dot -->
+                                    <circle cx="50" cy="50" r="3" fill="#1f2937"/>
+                                </svg>
+                            </div>
+                            <div class="text-xs text-gray-600">
+                                <div class="font-semibold" id="time-display-${habit.id}">07:00</div>
+                                <div class="text-xs text-gray-500">Target waktu</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Time Input -->
+                        <div class="flex items-center space-x-1">
+                            <input 
+                                type="time" 
+                                value="07:00"
+                                class="text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:border-blue-400"
+                                id="time-input-${habit.id}"
+                                onchange="updateClock(${habit.id})"
+                            >
+                            <button 
+                                onclick="setCurrentTime(${habit.id})"
+                                class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                                title="Set waktu sekarang"
+                            >
+                                📍
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render habits
+        function renderHabits() {
+            const container = document.getElementById('habitsContainer');
+            container.innerHTML = habits.map(habit => createHabitCard(habit)).join('');
+        }
+
+        // Toggle habit
+        function toggleHabit(habitId) {
+            const checkbox = document.getElementById(`checkbox-${habitId}`);
+            const checkmark = document.getElementById(`check-${habitId}`);
+            const habitCard = document.getElementById(`habit-${habitId}`);
+            
+            habitStates[habitId].checked = !habitStates[habitId].checked;
+            
+            if (habitStates[habitId].checked) {
+                checkmark.classList.remove('hidden');
+                checkbox.classList.add('checked');
+                habitCard.classList.add('bounce-animation');
+                checkedCount++;
+                
+                // Show motivational message
+                showMotivationalMessage(habitCard);
+            } else {
+                checkmark.classList.add('hidden');
+                checkbox.classList.remove('checked');
+                habitCard.classList.remove('bounce-animation');
+                checkedCount--;
+            }
+            
+            updateProgress();
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                habitCard.classList.remove('bounce-animation');
+            }, 1000);
+        }
+
+        // Show motivational message
+        function showMotivationalMessage(habitCard) {
+            const motivationalWords = [
+                "Hebat! 🌟", "Keren! 💪", "Luar Biasa! ✨", 
+                "Mantap! 🚀", "Bagus Sekali! 🎯", "Sempurna! 🏆"
+            ];
+            
+            const randomMessage = motivationalWords[Math.floor(Math.random() * motivationalWords.length)];
+            
+            // Create motivational popup
+            const popup = document.createElement('div');
+            popup.className = 'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10';
+            popup.textContent = randomMessage;
+            popup.style.animation = 'motivationPop 2s ease-out forwards';
+            
+            habitCard.style.position = 'relative';
+            habitCard.appendChild(popup);
+            
+            // Remove popup after animation
+            setTimeout(() => {
+                if (popup.parentNode) {
+                    popup.parentNode.removeChild(popup);
+                }
+            }, 2000);
+        }
+
+        // Save note
+        function saveNote(habitId) {
+            const noteInput = document.getElementById(`note-${habitId}`);
+            habitStates[habitId].note = noteInput.value;
+        }
+
+        // Update progress
+        function updateProgress() {
+            const progressText = document.getElementById('progressText');
+            const motivationText = document.getElementById('motivationText');
+            const progressBar = document.getElementById('progressBar');
+            
+            progressText.textContent = `${checkedCount}/7`;
+            motivationText.textContent = motivationMessages[checkedCount];
+            
+            const percentage = (checkedCount / 7) * 100;
+            progressBar.style.width = `${percentage}%`;
+            
+            // Add celebration effect for completion
+            if (checkedCount === 7) {
+                progressText.classList.add('bounce-animation');
+                setTimeout(() => {
+                    progressText.classList.remove('bounce-animation');
+                }, 1000);
+            }
+            
+            // Update weekly progress when habits change
+            updateWeeklyProgress();
+        }
+
+        // Update reflection progress
+        function updateReflectionProgress() {
+            const reflectionText = document.getElementById('reflectionText').value.trim();
+            const charCount = document.getElementById('charCount');
+            const reflectionCompleted = document.getElementById('reflectionCompleted');
+            
+            charCount.textContent = `${reflectionText.length} karakter`;
+            
+            if (reflectionText.length > 0) {
+                reflectionCompleted.textContent = 'Sudah ✅';
+                reflectionCompleted.className = 'text-xs text-green-600 font-semibold';
+            } else {
+                reflectionCompleted.textContent = 'Belum';
+                reflectionCompleted.className = 'text-xs text-orange-600 font-semibold';
+            }
+            
+            // Update weekly progress when reflection changes
+            updateWeeklyProgress();
+        }
+
+        // Clear reflection
+        function clearReflection() {
+            document.getElementById('reflectionText').value = '';
+            updateReflectionProgress();
+        }
+
+        // Daily themes with unique emoticons and motivational messages
+        const dailyThemes = {
+            1: {
+                emoji: "🌅",
+                title: "Hari Semangat Baru",
+                motivation: "Setiap hari adalah kesempatan baru untuk menjadi lebih baik!",
+                color: "from-orange-400 to-yellow-400",
+                bgColor: "from-orange-50 to-yellow-50"
+            },
+            2: {
+                emoji: "💪",
+                title: "Hari Kekuatan",
+                motivation: "Kamu lebih kuat dari yang kamu kira. Tunjukkan kekuatanmu!",
+                color: "from-red-400 to-pink-400",
+                bgColor: "from-red-50 to-pink-50"
+            },
+            3: {
+                emoji: "🌟",
+                title: "Hari Bersinar",
+                motivation: "Biarkan cahayamu bersinar dan menginspirasi orang lain!",
+                color: "from-yellow-400 to-amber-400",
+                bgColor: "from-yellow-50 to-amber-50"
+            },
+            4: {
+                emoji: "🚀",
+                title: "Hari Petualangan",
+                motivation: "Jelajahi hal-hal baru dan raih mimpi setinggi langit!",
+                color: "from-blue-400 to-cyan-400",
+                bgColor: "from-blue-50 to-cyan-50"
+            },
+            5: {
+                emoji: "🎯",
+                title: "Hari Fokus",
+                motivation: "Fokus pada tujuanmu dan tidak ada yang tidak mungkin!",
+                color: "from-green-400 to-emerald-400",
+                bgColor: "from-green-50 to-emerald-50"
+            },
+            6: {
+                emoji: "🌈",
+                title: "Hari Kebahagiaan",
+                motivation: "Sebarkan kebahagiaan seperti pelangi setelah hujan!",
+                color: "from-purple-400 to-pink-400",
+                bgColor: "from-purple-50 to-pink-50"
+            },
+            7: {
+                emoji: "🏆",
+                title: "Hari Juara",
+                motivation: "Kamu adalah juara dalam hidupmu sendiri. Rayakan pencapaianmu!",
+                color: "from-amber-400 to-orange-400",
+                bgColor: "from-amber-50 to-orange-50"
+            }
+        };
+
+        // Switch to different day
+        function switchToDay(day) {
+            // Save current day data
+            saveDayData();
+            
+            // Update current day
+            currentDay = day;
+            
+            // Update UI
+            updateDayTitle();
+            updateDayTheme();
+            updateDaySelector();
+            loadDayData();
+            updateHabitsDisplay();
+            updateProgress();
+            updateWeeklyProgress();
+        }
+
+        // Save current day data
+        function saveDayData() {
+            dailyData[currentDay].habits = { ...habitStates };
+            dailyData[currentDay].reflection = document.getElementById('reflectionText').value;
+            dailyData[currentDay].mood = currentMood;
+        }
+
+        // Load day data
+        function loadDayData() {
+            habitStates = { ...dailyData[currentDay].habits };
+            document.getElementById('reflectionText').value = dailyData[currentDay].reflection;
+            currentMood = dailyData[currentDay].mood || 'happy';
+            
+            // Update mood display
+            const response = moodResponses[currentMood];
+            document.getElementById('selectedMoodEmoji').textContent = response.emoji;
+            document.getElementById('selectedMoodText').textContent = response.text;
+            document.getElementById('selectedMoodText').className = `text-sm font-semibold ${response.color}`;
+            
+            // Highlight selected mood button
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.classList.remove('bg-yellow-200', 'rounded-full', 'shadow-lg');
+            });
+            const selectedBtn = document.getElementById(`mood-${currentMood}`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('bg-yellow-200', 'rounded-full', 'shadow-lg');
+            }
+            
+            updateReflectionProgress();
+            updateFinishButtonState();
+        }
+
+        // Update day selector appearance
+        function updateDaySelector() {
+            // Reset all day selector buttons
+            document.querySelectorAll('.day-selector-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-500', 'text-white', 'border-purple-500');
+                btn.classList.add('bg-white', 'border-purple-200');
+            });
+            
+            // Highlight current day
+            const currentBtn = document.getElementById(`day-selector-${currentDay}`);
+            currentBtn.classList.remove('bg-white', 'border-purple-200');
+            currentBtn.classList.add('bg-purple-500', 'text-white', 'border-purple-500');
+        }
+
+        // Update habits display
+        function updateHabitsDisplay() {
+            checkedCount = 0;
+            habits.forEach(habit => {
+                const state = habitStates[habit.id];
+                const checkbox = document.getElementById(`checkbox-${habit.id}`);
+                const checkmark = document.getElementById(`check-${habit.id}`);
+                const timeInput = document.getElementById(`time-input-${habit.id}`);
+                
+                // Update checkbox
+                if (state.checked) {
+                    checkmark.classList.remove('hidden');
+                    checkbox.classList.add('checked');
+                    checkedCount++;
+                } else {
+                    checkmark.classList.add('hidden');
+                    checkbox.classList.remove('checked');
+                }
+                
+                // Update time input and clock
+                if (timeInput && state.targetTime) {
+                    timeInput.value = state.targetTime;
+                    updateClock(habit.id);
+                }
+            });
+        }
+
+        // Update finish button state
+        function updateFinishButtonState() {
+            const completionMessage = document.getElementById('completionMessage');
+            const finishButton = document.getElementById('finishButton');
+            
+            if (dailyData[currentDay].isCompleted) {
+                completionMessage.classList.remove('hidden');
+                finishButton.textContent = '✅ Hari Ini Selesai!';
+                finishButton.className = 'px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl font-bold cursor-default shadow-lg';
+            } else {
+                completionMessage.classList.add('hidden');
+                finishButton.textContent = '🎯 Selesai Hari Ini';
+                finishButton.className = 'px-6 py-3 bg-gradient-to-r from-blue-500 to-orange-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-orange-600 transition-all duration-300 shadow-lg transform hover:scale-105';
+            }
+        }
+
+        // Update weekly progress
+        function updateWeeklyProgress() {
+            // Save current day data first
+            saveDayData();
+            
+            let completedDaysCount = 0;
+            let totalHabitsCompleted = 0;
+            
+            // Count completed days and total habits
+            for (let day = 1; day <= 7; day++) {
+                let dayHabitsCount = 0;
+                habits.forEach(habit => {
+                    if (dailyData[day].habits[habit.id] && dailyData[day].habits[habit.id].checked) {
+                        dayHabitsCount++;
+                        totalHabitsCompleted++;
+                    }
+                });
+                
+                // Check if day is completed (all 7 habits + journal)
+                const hasJournal = dailyData[day].reflection && dailyData[day].reflection.trim().length > 0;
+                if (dayHabitsCount === 7 && hasJournal) {
+                    completedDaysCount++;
+                    dailyData[day].isCompleted = true;
+                } else {
+                    dailyData[day].isCompleted = false;
+                }
+            }
+            
+            // Update weekly stats
+            document.getElementById('completedDaysCount').textContent = completedDaysCount;
+            document.getElementById('totalHabitsCount').textContent = totalHabitsCompleted;
+            
+            const weeklyPercentage = Math.round((completedDaysCount / 7) * 100);
+            document.getElementById('weeklyPercentage').textContent = `${weeklyPercentage}%`;
+            
+            // Update weekly progress bar
+            document.getElementById('weeklyProgressText').textContent = `${completedDaysCount}/7 hari selesai`;
+            document.getElementById('weeklyProgressBar').style.width = `${weeklyPercentage}%`;
+            
+            // Update daily progress grid and day selector icons
+            updateWeeklyProgressGrid();
+            updateDayCheckIcons();
+        }
+
+        // Update weekly progress grid
+        function updateWeeklyProgressGrid() {
+            const grid = document.getElementById('weeklyProgressGrid');
+            const dayNames = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+            
+            let gridHTML = '';
+            
+            for (let day = 1; day <= 7; day++) {
+                let dayHabitsCount = 0;
+                habits.forEach(habit => {
+                    if (dailyData[day].habits[habit.id] && dailyData[day].habits[habit.id].checked) {
+                        dayHabitsCount++;
+                    }
+                });
+                
+                const hasJournal = dailyData[day].reflection && dailyData[day].reflection.trim().length > 0;
+                const isCompleted = dayHabitsCount === 7 && hasJournal;
+                const isCurrentDay = day === currentDay;
+                
+                let cardClass = 'bg-white border-2 rounded-xl p-3 text-center transition-all duration-300 cursor-pointer hover:shadow-lg';
+                let statusIcon = '';
+                let statusText = '';
+                
+                if (isCompleted) {
+                    cardClass += ' border-green-400 bg-green-50';
+                    statusIcon = '✅';
+                    statusText = 'Selesai';
+                } else if (dayHabitsCount > 0 || hasJournal) {
+                    cardClass += ' border-yellow-400 bg-yellow-50';
+                    statusIcon = '⏳';
+                    statusText = `${dayHabitsCount}/7`;
+                } else {
+                    cardClass += ' border-gray-300';
+                    statusIcon = '⭕';
+                    statusText = '0/7';
+                }
+                
+                if (isCurrentDay) {
+                    cardClass += ' ring-2 ring-purple-400';
+                }
+                
+                gridHTML += `
+                    <div class="${cardClass}" onclick="switchToDay(${day})" title="Klik untuk mengisi jurnal hari ${day}">
+                        <div class="text-xs font-semibold text-gray-600 mb-1">${dayNames[day-1]}</div>
+                        <div class="text-lg mb-1">${statusIcon}</div>
+                        <div class="text-xs font-bold ${isCompleted ? 'text-green-600' : dayHabitsCount > 0 ? 'text-yellow-600' : 'text-gray-500'}">${statusText}</div>
+                    </div>
+                `;
+            }
+            
+            grid.innerHTML = gridHTML;
+        }
+
+        // Update day check icons in selector
+        function updateDayCheckIcons() {
+            for (let day = 1; day <= 7; day++) {
+                let dayHabitsCount = 0;
+                habits.forEach(habit => {
+                    if (dailyData[day].habits[habit.id] && dailyData[day].habits[habit.id].checked) {
+                        dayHabitsCount++;
+                    }
+                });
+                
+                const hasJournal = dailyData[day].reflection && dailyData[day].reflection.trim().length > 0;
+                const isCompleted = dayHabitsCount === 7 && hasJournal;
+                
+                const checkIcon = document.getElementById(`day-check-${day}`);
+                
+                if (isCompleted) {
+                    checkIcon.textContent = '✅';
+                } else if (dayHabitsCount > 0 || hasJournal) {
+                    checkIcon.textContent = '⏳';
+                } else {
+                    checkIcon.textContent = '⭕';
+                }
+            }
+        }
+
+        // Finish day
+        function finishDay() {
+            const reflectionText = document.getElementById('reflectionText').value.trim();
+            const completionMessage = document.getElementById('completionMessage');
+            const finishButton = document.getElementById('finishButton');
+            
+            if (checkedCount === 7 && reflectionText.length > 0) {
+                // Mark day as completed
+                dailyData[currentDay].isCompleted = true;
+                
+                // Show completion message
+                completionMessage.classList.remove('hidden');
+                completionMessage.classList.add('bounce-animation');
+                
+                // Update button
+                finishButton.textContent = '✅ Selamat, Hari Ini Selesai!';
+                finishButton.className = 'px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-2xl font-bold text-xl cursor-default shadow-lg';
+                
+                // Update weekly progress
+                updateWeeklyProgress();
+                
+                // Scroll to completion message
+                completionMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                setTimeout(() => {
+                    completionMessage.classList.remove('bounce-animation');
+                }, 1000);
+            } else {
+                let message = 'Untuk menyelesaikan jurnal hari ini:\n\n';
+                if (checkedCount < 7) {
+                    message += `📋 Selesaikan ${7 - checkedCount} kebiasaan lagi\n`;
+                }
+                if (reflectionText.length === 0) {
+                    message += '✍️ Isi refleksi harian\n';
+                }
+                message += '\nSemangat! Kamu pasti bisa! 💪';
+                alert(message);
+            }
+        }
+
+
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            setCurrentDate();
+            updateDayTitle();
+            updateDailyQuote(); // Add random motivational quote
+            initializeDailyData();
+            initializeHabits();
+            renderHabits();
+            
+            // Initialize clocks after rendering habits
+            setTimeout(() => {
+                initializeClocks();
+            }, 100);
+            
+            // Set default mood
+            setMood('happy');
+            
+            updateDaySelector();
+            updateProgress();
+            updateReflectionProgress();
+            updateWeeklyProgress();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98c63d650240fd0a',t:'MTc2MDEwMDU4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
